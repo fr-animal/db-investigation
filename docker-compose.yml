@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  creator:
+    image: creator
+    build: ./creator
+    links:
+      - rabbit
+    depends_on:
+      - rabbit
+    volumes:
+      - ./creator/src:/app/src
+    ports:
+      - "3000:3000"
+  consumer:
+    image: consumer
+    build: ./consumer
+    links:
+      - rabbit
+    depends_on:
+      - rabbit
+    volumes:
+      - ./consumer/src:/app/src
+  rabbit:
+    image: rabbitmq
+  postgres:
+    image: postgres
